@@ -6,7 +6,7 @@ import Tinder from './components/Tinder';
 
 function App() {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
         <header>Tinder do projektów</header>
         <main>
             <nav>
