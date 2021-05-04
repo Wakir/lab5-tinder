@@ -80,16 +80,12 @@ class Tinder extends React.Component{
         return (
             <Switch>
               <Route path="/" exact>
-                <section>
                   <WorkerList workerList={this.state.workerList}/>
-                </section>
               </Route>
               <Route path="/new">
-                <section>
                   <WorkerForm adder={this.adder}
                   showWarning1={this.showWarning1}
                   showWarning2={this.showWarning2}/>
-                  </section>
               </Route>
               <Route>
                 <section>

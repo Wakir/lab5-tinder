@@ -1,6 +1,6 @@
 import './App.css';
 
-import {BrowserRouter as Router, Link as NavLink, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Link as NavLink} from 'react-router-dom';
 
 import Tinder from './components/Tinder';
 
