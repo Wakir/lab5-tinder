@@ -2,6 +2,7 @@ import './App.css';
 
 import {BrowserRouter as Router, Link as NavLink} from 'react-router-dom';
 
+import Navigate from './components/Navigate';
 import Tinder from './components/Tinder';
 
 function App() {
@@ -9,10 +10,7 @@ function App() {
     <Router basename={process.env.PUBLIC_URL}>
         <header>Tinder do projektów</header>
         <main>
-            <nav>
-                <NavLink to="/" exact>Lista ofert</NavLink>
-                <NavLink to="/new">Dodaj nowy</NavLink>
-            </nav>
+          <Navigate/>
           <Tinder/>
         </main>
     </Router>

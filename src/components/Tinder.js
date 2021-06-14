@@ -1,10 +1,14 @@
 import React from 'react';
 import {Switch,Route} from 'react-router-dom';
+import { useState } from 'react';
 
+import Login from './Login';
 import WorkerForm from './WorkerForm';
 import WorkerList from './WorkerList';
+import Register from './Register';
 
 class Tinder extends React.Component{
+
     state ={
         workerList:[ {name:"Maciej Błoński",
         mail:"maciej.blonski@cosiek.pl",
@@ -79,13 +83,18 @@ class Tinder extends React.Component{
     render() {
         return (
             <Switch>
-              <Route path="/" exact>
-                  <WorkerList workerList={this.state.workerList}/>
+            <Route path="/" exact></Route>
+              <Route path="/oferty" exact>
+                    <WorkerList workerList={this.state.workerList}/>
+              </Route>
+              <Route path="/login" exact>
+                    <Login></Login>
+              </Route>
+              <Route path="/register" exact>
+                    <Register></Register>
               </Route>
               <Route path="/new">
-                  <WorkerForm adder={this.adder}
-                  showWarning1={this.showWarning1}
-                  showWarning2={this.showWarning2}/>
+                  <WorkerForm/>
               </Route>
               <Route>
                 <section>

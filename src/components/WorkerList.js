@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import {database} from '../firebase';
 
 function hashCode(str){
     let hash=0;
@@ -12,16 +13,13 @@ function hashCode(str){
 }
 
 const WorkerItem = (props) =>{
-    if(props.visible){
-        const tagListRender=props.tagi.join(", ")
-        return(
-        <li className="list-group-item">
-        <div><p>{props.text.name} ({props.text.mail})</p></div>
-        <div>{props.text.description}</div>
-        <div>Tagi: {tagListRender}</div>
-        </li>)
-    }
-    return null
+    //const tagListRender=props.tagi.join(", ")
+    return(
+    <li className="list-group-item">
+    <div><p>{props.text.name} ({props.text.email})</p></div>
+    <div>{props.text.description}</div>
+    <div>Tagi: Python</div>
+    </li>)
 }
 
 const WorkerSearch = (props) =>{
@@ -50,21 +48,23 @@ const WorkerSearch = (props) =>{
     </>)
 }
 
-class WorkerList extends React.Component{
-    state ={
-        fullTagList:["Python","Java","HTML","C#"],
-        newWorker:{
-            name:"",
-            mail:"",
-            description:"",
-            tagi:["Python"]
-        },
-        searchName:"",
-        searchMail:"",
-    }
-    errorInput1="Podaj inny adres Email";
-    errorInput2="Potrzebny jest email";
-    handleInputChange= (event) =>{
+const WorkerList = () => {
+    const [workerList,setWorkerList] = useState("");
+
+   useEffect (() => {
+       const workerBase=database.ref("WorkerBase")
+       workerBase.on('value', (snapshot) => {
+           const workers = snapshot.val();
+           const workerList = [];
+        for (let id in workers){
+            workerList.push(workers[id])
+        }
+        console.log(workerList)
+        setWorkerList(workerList)
+       })
+   }, []);
+
+   /*handleInputChange= (event) =>{
         if(event.target.name=="searchName" || event.target.name=="searchMail"){
             let iSearchName=this.state.searchName;
             let iSearchMail=this.state.searchMail;
@@ -103,22 +103,14 @@ class WorkerList extends React.Component{
             }
         });
         }
-    }
-    render() {
-        const listRender=this.props.workerList.map((it) => (
-            <WorkerItem key={hashCode(it.mail)} text={it} tagi={it.tagi} visible={it.visible}/>))
-        return (
-            <>
-            <WorkerSearch 
-            valSearchName={this.state.searchName}
-            valMailName={this.state.searchMail}
-            funcOnChange={this.handleInputChange}
-            />
-            <br></br>
-            <div class="container-sm"><ul>{listRender}</ul></div>
-            </>
+    }*/
+
+   // const listRender= workerList.map((it) => (
+    //        <WorkerItem key={hashCode(it.mail)} text={it} visible={true}/>))
+    return (
+            <div class="container-sm">{workerList ? workerList.map((it) => (
+                <WorkerItem key={it.index} text={it}/>)) : ''}</div>
         );
-    }
 }
 
 export default WorkerList;
